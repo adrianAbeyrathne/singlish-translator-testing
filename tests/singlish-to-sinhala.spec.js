@@ -43,8 +43,8 @@ test.describe('Functional Test Cases – Singlish to Sinhala', () => {
   });
 
   test('Pos_05 - Ongoing action', async ({ page }) => {
-    const input = 'mama drive karana gaman inne, mama oyata passee call karannan.';
-    const expected = 'මම drive කරන ගමන් ඉන්නේ, මම ඔයට පස්සේ call කරන්නන්.';
+    const input = 'mama drive karana gaman inne, mama oyaata passee call karannan.';
+    const expected = 'මම drive කරන ගමන් ඉන්නේ, මම ඔයාට පස්සේ call කරන්නන්.';
 
     await page.fill('textarea', input);
     await expect(page.locator('div.whitespace-pre-wrap').first()).toContainText(expected);
@@ -59,8 +59,8 @@ test.describe('Functional Test Cases – Singlish to Sinhala', () => {
   });
 
   test('Pos_07 - Imperative with English term', async ({ page }) => {
-    const input = 'oyage NIC copy eka email karala evanna.';
-    const expected = 'ඔයගෙ NIC copy එක email කරල එවන්න.';
+    const input = 'oyage NIC copy eka email karalaa evanna.';
+    const expected = 'ඔයගෙ NIC copy එක email කරලා එවන්න.';
 
     await page.fill('textarea', input);
     await expect(page.locator('div.whitespace-pre-wrap').first()).toContainText(expected);
@@ -99,24 +99,24 @@ test.describe('Functional Test Cases – Singlish to Sinhala', () => {
   });
 
   test('Pos_12 - Past negative understanding', async ({ page }) => {
-    const input = 'eeyee anthima gaana mata therunee naehae.';
-    const expected = 'ඒයේ අන්තිම ගාන මට තෙරුනේ නැහැ.';
+    const input = 'iyee anthima gaana mata therunee naehae.';
+    const expected = 'ඉයේ අන්තිම ගාන මට තෙරුනේ නැහැ.';
 
     await page.fill('textarea', input);
     await expect(page.locator('div.whitespace-pre-wrap').first()).toContainText(expected);
   });
 
   test('Pos_13 - Lecture timing sentence', async ({ page }) => {
-    const input = 'heta lecture eka thiyenne udhee 10 kiyala madam kivvaa.';
-    const expected = 'හෙට lecture එක තියෙන්නෙ උදේ 10 කියල madam කිව්වා.';
+    const input = 'heta lecture eka thiyennee 10.00 AM kiyalaa madam kivvaa.';
+    const expected = 'හෙට lecture එක තියෙන්නේ 10.00 AM කියලා madam කිව්වා.';
 
     await page.fill('textarea', input);
     await expect(page.locator('div.whitespace-pre-wrap').first()).toContainText(expected);
   });
 
   test('Pos_14 - Measurement unit', async ({ page }) => {
-    const input = 'mama kadeeta gihin seeni 1kg aran avaa.';
-    const expected = 'මම කඩේට ගිහින් සේනි 1kg අරන් අවා.';
+    const input = 'mama kadeeta gihin siini 1kg aran avaa.';
+    const expected = 'මම කඩේට ගිහින් සීනි 1kg අරන් අවා.';
 
     await page.fill('textarea', input);
     await expect(page.locator('div.whitespace-pre-wrap').first()).toContainText(expected);
@@ -131,16 +131,16 @@ test.describe('Functional Test Cases – Singlish to Sinhala', () => {
   });
 
   test('Pos_16 - Future intent', async ({ page }) => {
-    const input = 'api yanavaa eka balanna heta.';
-    const expected = 'අපි යනවා එක බලන්න හෙට.';
+    const input = 'api yanavaa eeka balanna heta.';
+    const expected = 'අපි යනවා ඒක බලන්න හෙට.';
 
     await page.fill('textarea', input);
     await expect(page.locator('div.whitespace-pre-wrap').first()).toContainText(expected);
   });
 
   test('Pos_17 - Past completion', async ({ page }) => {
-    const input = 'mama kalin oya prashna paththaraya karaa';
-    const expected = 'මම කලින් ඔය ප්‍රශ්න පත්තරය කරා';
+    const input = 'mama kalin oya prashNa paththaraya karaa';
+    const expected = 'මම කලින් ඔය ප්‍රශ්ණ පත්තරය කරා';
 
     await page.fill('textarea', input);
     await expect(page.locator('div.whitespace-pre-wrap').first()).toContainText(expected);
