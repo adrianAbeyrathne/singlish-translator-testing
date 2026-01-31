@@ -1,22 +1,23 @@
 import { test, expect } from '@playwright/test';
 
-test('Pos_UI_0001 - Sinhala output updates in real time while typing', async ({ page }) => {
+test('Pos_UI_0001 - Real-time Sinhala update for simple daily sentence', async ({ page }) => {
 
   await page.goto('https://www.swifttranslator.com/');
 
   const inputField = page.locator('textarea');
   const outputField = page.locator('div.whitespace-pre-wrap').first();
 
-  // Step 1: Type initial text
-  await inputField.type('mama gedhara');
+  // Start typing
+  await inputField.type('mama paandhara');
 
-  // Step 2: Check partial output appears
+  // Partial output should appear
   await expect(outputField).toContainText('මම');
 
-  // Step 3: Continue typing
-  await inputField.type(' yanavaa');
+  // Continue typing
+  await inputField.type(' kaema kaevaa.');
 
-  // Step 4: Check updated output
-  await expect(outputField).toContainText('මම ගෙදර යනවා');
+  // Final Sinhala output check
+  await expect(outputField).toContainText('මම පාන්දර කැම කෑවා');
 
 });
+

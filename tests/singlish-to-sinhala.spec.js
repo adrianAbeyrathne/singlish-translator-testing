@@ -202,88 +202,107 @@ test.describe('Functional Test Cases – Singlish to Sinhala', () => {
     await expect(page.locator('div.whitespace-pre-wrap').first()).toContainText(expected);
   });
 
-  /* =========================
-     NEGATIVE TEST CASES (10)
-     ========================= */
+/* =========================
+   NEGATIVE TEST CASES (10)
+   ========================= */
 
-  test('Neg_01 - No spacing words', async ({ page }) => {
-    const input = 'mamaraesvimatayanneheta.';
-    const expected = 'මමරැස්විමටයන්නෙහෙට';
+test('Neg_01 - No spacing words', async ({ page }) => {
+  const input = 'mamaraesvimatayanneheta.';
+  const expected = 'මම රැස්වීමට හෙට යන්නෙ.'; // spacing assumed incorrectly
 
-    await page.fill('textarea', input);
-    await expect(page.locator('div.whitespace-pre-wrap').first()).toContainText(expected);
-  });
+  await page.fill('textarea', input);
+  await expect(page.locator('div.whitespace-pre-wrap').first())
+    .toContainText(expected);
+});
 
-  test('Neg_02 - Excessive repetition', async ({ page }) => {
-    const input = 'hari hari hari hari mama ennam.';
-    const expected = 'හරි හරි හරි හරි මම එන්නම්.';
+test('Neg_02 - Emotional typing with repetition and spacing', async ({ page }) => {
+  const input = 'hari...... oyaayaa..... ennam....';
+  const expected = 'හරි ඔයා එන්න.'; 
 
-    await page.fill('textarea', input);
-    await expect(page.locator('div.whitespace-pre-wrap').first()).toContainText(expected);
-  });
+  await page.fill('textarea', input);
 
-  test('Neg_03 - Tense conflict', async ({ page }) => {
-    const input = 'mama heta giyaa.';
-    const expected = 'මම හෙට ගියා.';
+  await expect(
+    page.locator('div.whitespace-pre-wrap').first()
+  ).toContainText(expected);
+});
 
-    await page.fill('textarea', input);
-    await expect(page.locator('div.whitespace-pre-wrap').first()).toContainText(expected);
-  });
+test('Neg_03 - Tense conflict', async ({ page }) => {
+  const input = 'mama heta giyaa.';
+  const expected = 'මම අද ගියා.'; // wrong time reference
 
-  test('Neg_04 - Multiple spaces', async ({ page }) => {
-    const input = 'mama  palliyata    yanavaa';
-    const expected = 'මම  පල්ලියට    යනවා';
+  await page.fill('textarea', input);
+  await expect(page.locator('div.whitespace-pre-wrap').first())
+    .toContainText(expected);
+});
 
-    await page.fill('textarea', input);
-    await expect(page.locator('div.whitespace-pre-wrap').first()).toContainText(expected);
-  });
+test('Neg_04 - Multiple spaces', async ({ page }) => {
+  const input = 'mama  palliyata    giyanavaa';
+  const expected = 'මම පල්ලියට ගියා'; // verb changed
 
-  test('Neg_05 - Heavy punctuation', async ({ page }) => {
-    const input = 'oyaa adha enne naedhdha???!!!';
-    const expected = 'ඔයා අද එන්නෙ නැද්ද???!!!';
+  await page.fill('textarea', input);
+  await expect(page.locator('div.whitespace-pre-wrap').first())
+    .toContainText(expected);
+});
 
-    await page.fill('textarea', input);
-    await expect(page.locator('div.whitespace-pre-wrap').first()).toContainText(expected);
-  });
+test('Neg_05 - Heavy punctuation', async ({ page }) => {
+  const input = 'oyaa adha enne naedhdha???!?!?!?!!!';
+  const expected = 'ඔයා අද එන්නෙ නැද්ද?'; 
 
-  test('Neg_06 - Misspelled words', async ({ page }) => {
-    const input = 'oyaa koheda giye ada ude?';
-    const expected = 'ඔයා කොහෙඩ ගියෙ අඩ උඩෙ?';
+  await page.fill('textarea', input);
+  await expect(page.locator('div.whitespace-pre-wrap').first())
+    .toContainText(expected);
+});
 
-    await page.fill('textarea', input);
-    await expect(page.locator('div.whitespace-pre-wrap').first()).toContainText(expected);
-  });
+test('Neg_06 - Misspelled words', async ({ page }) => {
+  const input = 'oyaa koheda giye ada ude?';
+  const expected = 'ඔයා කොහෙද ගියේ අද උදේ?'; // corrected spelling
 
-  test('Neg_07 - Mixed English grammar', async ({ page }) => {
-    const input = 'mama udhe work eka finish kara but still tired feeling eka thinavaa.';
-    const expected = 'මම උදෙ work එක finish කර but still tired feeling එක තිනවා.';
+  await page.fill('textarea', input);
+  await expect(page.locator('div.whitespace-pre-wrap').first())
+    .toContainText(expected);
+});
 
-    await page.fill('textarea', input);
-    await expect(page.locator('div.whitespace-pre-wrap').first()).toContainText(expected);
-  });
+test('Neg_07 - Mixed English grammar', async ({ page }) => {
+  const input =
+    'mama udhe work eka finish kara but still tired feeling eka thinavaa.';
+  const expected =
+    'මම උදේ වැඩේ ඉවර කරලා තාමත් මහන්සි.'; // English removed
 
-  test('Neg_08 - Random English letters', async ({ page }) => {
-    const input = 'eka nam hari hoda da nadda kiyala podi doubt eka thiyenavaa.';
-    const expected = 'එක නම් හරි හොඩ ඩ නඩ්ඩ කියල පොඩි doubt එක තියෙනවා.';
+  await page.fill('textarea', input);
+  await expect(page.locator('div.whitespace-pre-wrap').first())
+    .toContainText(expected);
+});
 
-    await page.fill('textarea', input);
-    await expect(page.locator('div.whitespace-pre-wrap').first()).toContainText(expected);
-  });
+test('Neg_08 - Random English letters', async ({ page }) => {
+  const input =
+    'eka nam hari hoda da nadda kiyala podi doubt eka thiyenavaa.';
+  const expected =
+    'එක නම් හොඳද නැද්ද කියලා පොඩි සැකයක් තියෙනවා.'; // paraphrased
 
-  test('Neg_09 - Slang + abbreviations', async ({ page }) => {
-    const input = 'mama adha lecs yanne nae cuz weather eka hari nae.';
-    const expected = 'මම අද ලෙcස් යන්නෙ නැ cඋz weather එක හරි නැ.';
+  await page.fill('textarea', input);
+  await expect(page.locator('div.whitespace-pre-wrap').first())
+    .toContainText(expected);
+});
 
-    await page.fill('textarea', input);
-    await expect(page.locator('div.whitespace-pre-wrap').first()).toContainText(expected);
-  });
+test('Neg_09 - Slang + abbreviations', async ({ page }) => {
+  const input =
+    'mama adha lecs yanne nae cuz weather eka hari nae.';
+  const expected =
+    'මම අද ලෙක්චර්ස් යන්නෙ නැහැ මොකද කාලගුණය හොඳ නැහැ.'; // expanded
 
-  test('Neg_10 - Emo-style spelling', async ({ page }) => {
-    const input = 'mama thaama stuck in traffic meka   harima  annoyingggg';
-    const expected = 'මම තාම stuck ඉන් traffic මෙක   හරිම  අන්නොයින්ග්ග්ග්ග්';
+  await page.fill('textarea', input);
+  await expect(page.locator('div.whitespace-pre-wrap').first())
+    .toContainText(expected);
+});
 
-    await page.fill('textarea', input);
-    await expect(page.locator('div.whitespace-pre-wrap').first()).toContainText(expected);
-  });
+test('Neg_10 - Emo-style spelling', async ({ page }) => {
+  const input =
+    'mama thaama stuck in traffic meka harima annoyingggg';
+  const expected =
+    'මම තාම වාහන තදබදේ හිරවෙලා ඉන්නේ, හරිම කරදරයි.'; // cleaned language
 
+  await page.fill('textarea', input);
+  await expect(page.locator('div.whitespace-pre-wrap').first())
+    .toContainText(expected);
+});
 });
