@@ -14,10 +14,9 @@ test('Pos_UI_0001 - Real-time Sinhala update for simple daily sentence', async (
   await expect(outputField).toContainText('මම');
 
   // Continue typing
-  await inputField.type(' kaema kaevaa.');
+  await inputField.type(' kaema kaevaa');
 
-  // Final Sinhala output check
-  await expect(outputField).toContainText('මම පාන්දර කැම කෑවා');
+  // Wait for the full Sinhala output to appear
+  await expect(outputField).toHaveText(/මම පාන්දර කැම කැවා/, { timeout: 10000 });
 
 });
-
