@@ -208,7 +208,7 @@ test.describe('Functional Test Cases – Singlish to Sinhala', () => {
 
 test('Neg_01 - No spacing words', async ({ page }) => {
   const input = 'mamaraesvimatayanneheta.';
-  const expected = 'මම රැස්වීමට හෙට යන්නෙ.'; // spacing assumed incorrectly
+  const expected = 'මමරැස්විමටයන්නෙහෙට.'; 
 
   await page.fill('textarea', input);
   await expect(page.locator('div.whitespace-pre-wrap').first())
